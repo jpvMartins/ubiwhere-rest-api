@@ -5,13 +5,13 @@ Testes for models.
 """
 from decimal import Decimal
 
-
+from django.contrib.gis.geos import LineString
 from django.test import TestCase   # base class for tests
 from django.contrib.auth import get_user_model
-# helper function : get the user model
 
 from core import models
 
+# helper function : get the user model
 def create_user(email='user@example.com',password='test123'):
     """Create and return a new user."""
     return get_user_model().objects.create_user(email,password)
@@ -71,3 +71,16 @@ class ModelTests(TestCase):
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
 
+    def test_create_road_segment(self):
+        """
+        Test creating a road segment is successful.
+        """
+        road = models.Road.objects.create(
+            segment=LineString(
+                (103.9460064, 30.75066046),
+                (103.9564943, 30.7450801)
+            ),
+            length=1179.207157,
+        )
+
+        self.assertEqual(str(road),f"Road {road.id} ({road.segment})")

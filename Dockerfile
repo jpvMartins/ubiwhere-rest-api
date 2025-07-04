@@ -13,9 +13,15 @@ EXPOSE 8000
 ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
+    apk update && apk upgrade &&\
     apk add --upgrade --no-cache postgresql-client && \
     apk add --upgrade --no-cache --virtual .tmp-build-deps \
-        build-base postgresql-dev musl-dev &&\
+        gcc build-base postgresql-dev musl-dev py3-gdal &&\
+    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+        gdal-dev \
+        geos-dev \
+        proj-dev &&\
+
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ "$DEV" = "true" ]; then \
         /py/bin/pip install -r /tmp/requirements.dev.txt; \
