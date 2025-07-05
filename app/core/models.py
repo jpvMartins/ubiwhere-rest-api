@@ -68,7 +68,6 @@ class Road(models.Model):
     segment = gis_models.LineStringField()
     length = models.FloatField()
 
-
     def __str__(self):
         """Return string representation of our Road"""
         return f"Road {self.id} ({self.segment})"

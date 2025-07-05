@@ -24,4 +24,4 @@ class RoadDetailSerializer(RoadSerializer):
     """ Serializer for road detial view."""
 
     class Meta(RoadSerializer.Meta):
-        fields=RoadSerializer.Meta.fields + ['segment']
+        fields=RoadSerializer.Meta.fields + ['segment']  

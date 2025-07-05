@@ -4,7 +4,7 @@ Views for the road APIs.
 
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
-from core.permissions import IsAdminOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from core.models import Road
 from road import serializers
@@ -16,7 +16,7 @@ class RoadViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RoadDetailSerializer
     queryset = Road.objects.all()
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         """Retrive roads ."""
@@ -29,6 +29,7 @@ class RoadViewSet(viewsets.ModelViewSet):
 
         return self.serializer_class
 
-    def perform_create(self,serializer):
-        """Create a new road. Give the already authenticated user as user value for foreign key"""
-        serializer.save(user=self.request.user)
+    # def perform_create(self,serializer):
+    #     """Create a new road. Give the already authenticated user as user value for foreign key"""
+    #     serializer.save(user=self.request.user)
+    
