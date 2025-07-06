@@ -52,3 +52,5 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.Road)
+admin.site.register(models.Velocity_Reads)
+admin.site.register(models.Classification)

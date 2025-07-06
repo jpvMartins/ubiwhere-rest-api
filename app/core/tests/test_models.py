@@ -84,3 +84,21 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(road),f"Road {road.id} ({road.segment})")
+
+    def test_created_read(self):
+        """
+        TesT createing a red sucssesful.
+        """
+        road = models.Road.objects.create(
+            segment=LineString(
+                (103.9460064, 30.75066046),
+                (103.9564943, 30.7450801)
+            ),
+            length=1179.207157,
+        )
+
+        read = models.Velocity_Reads.objects.create(
+            road = road,
+            read_value = Decimal('30.05')
+        )        
+        self.assertEqual(str(read),f"Read {read.read_value} at {read.road}")

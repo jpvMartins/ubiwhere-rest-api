@@ -2,18 +2,25 @@
 Views for the road APIs.
 """
 
-from rest_framework import viewsets
+from rest_framework import (
+    viewsets,
+    mixins,
+)
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from core.models import Road
+from core.models import (
+    Road,
+    Velocity_Reads,
+    Classification
+)
 from road import serializers
 
 
 class RoadViewSet(viewsets.ModelViewSet):
     """View for manage Road APIs.(road/views.py)"""
 
-    serializer_class = serializers.RoadDetailSerializer
+    serializer_class = serializers.RoadSerializer
     queryset = Road.objects.all()
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -21,15 +28,30 @@ class RoadViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Retrive roads ."""
         return self.queryset.order_by('-id')
-
-    def get_serializer_class(self):
-        """Return the serializer class for the request."""
-        if self.action == 'list':
-            return serializers.RoadSerializer
-
-        return self.serializer_class
-
-    # def perform_create(self,serializer):
-    #     """Create a new road. Give the already authenticated user as user value for foreign key"""
-    #     serializer.save(user=self.request.user)
     
+
+
+class ReadViewSet(viewsets.ModelViewSet):
+    """View for manage Read Apis.(read/)"""
+
+    serializer_class = serializers.ReadSerializer
+    queryset = Velocity_Reads.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        """Retrive roads ."""
+        return self.queryset.order_by('-read_at')
+
+class ClassificationViewSet(mixins.UpdateModelMixin,
+                            mixins.ListModelMixin,
+                            viewsets.GenericViewSet):
+    """Manage Classification in database"""
+    serializer_class = serializers.ClassificationSerializer
+    queryset = Classification.objects.filter(id=1)
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+
+

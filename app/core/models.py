@@ -64,10 +64,40 @@ class Road(models.Model):
     """
     Road object.
     """
-
+    name = models.CharField(max_length=255)
     segment = gis_models.LineStringField()
     length = models.FloatField()
+
+    class Meta:
+        constraints = [ models.UniqueConstraint(
+            fields = ['name','segment'],
+            name = 'unique_road'
+        ),
+        ]
 
     def __str__(self):
         """Return string representation of our Road"""
         return f"Road {self.id} ({self.segment})"
+
+
+class Velocity_Reads(models.Model):
+    """Velocity-Reads object."""
+    road = models.ForeignKey(Road,on_delete=models.CASCADE, related_name='velocity_reads')
+    read_value=models.DecimalField(max_digits=5, decimal_places=2)
+    read_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """Return a string visualization of our read."""
+        return f"Read {self.read_value} at {self.road}"
+    
+class Classification(models.Model):
+    """
+    Classification object.
+    """
+
+    min_value = models.DecimalField(max_digits=5, decimal_places=2)
+    max_value = models.DecimalField(max_digits=5, decimal_places=2)
+
+
+    def __str__(self):
+        return f"{self.id}: min_value: {self.min_value} , max_value: {self.max_value}"

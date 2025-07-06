@@ -34,7 +34,7 @@ urlpatterns = [
         include('user.urls')
     ),
     path(
-        'api/road',
+        'api/road/',
         include('road.urls')
     )
 ]
