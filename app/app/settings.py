@@ -143,6 +143,9 @@ AUTH_USER_MODEL = 'core.User'
 # REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+
 }
 
 GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'

@@ -14,6 +14,7 @@ from rest_framework import status
 from core.models import (
     Road,
     Velocity_Reads,
+    Classification,
 )
 
 from road.serializers import (
@@ -54,6 +55,7 @@ class PublicRoadApiTests(TestCase):
 
     def setUp(self):
         self.client=APIClient()
+        Classification.objects.create(min_value=25,max_value=50)
 
     def test_retrive_road(self):
         """
@@ -72,7 +74,7 @@ class PublicRoadApiTests(TestCase):
         road = Road.objects.all().order_by('-id')
         serializer = RoadSerializer(road, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, serializer.data)
+        self.assertEqual(res.data["results"], serializer.data)
 
     def test_retrieve_detail_road(self):
         """
@@ -144,6 +146,7 @@ class PrivateRoadApiTests(TestCase):
         self.client = APIClient()
         self.user = create_user(email='user@example.com',password='testpass123')
         self.client.force_authenticate(self.user)
+        Classification.objects.create(min_value=25,max_value=50) # test db doesn´t have classification row
 
 
     def test_create_road(self):
@@ -189,7 +192,7 @@ class PrivateRoadApiTests(TestCase):
         road = Road.objects.all().order_by('-id')
         serializer = RoadSerializer(road, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, serializer.data)
+        self.assertEqual(res.data['results'], serializer.data)
 
     def test_update_road(self):
         """Test full update of a road."""

@@ -76,7 +76,7 @@ class PublicReadApiTests(TestCase):
         read = Velocity_Reads.objects.all().order_by('-id')
         serializer = ReadSerializer(read, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, serializer.data)
+        self.assertEqual(res.data['results'], serializer.data)
 
         
     def test_update_read_notAlow(self):
@@ -147,7 +147,7 @@ class PrivateReadApiTests(TestCase):
         read = Velocity_Reads.objects.all().order_by('-id')
         serializer = ReadSerializer(read, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, serializer.data)
+        self.assertEqual(res.data['results'], serializer.data)
 
     def test_update_read(self):
         """Test full update of a read."""

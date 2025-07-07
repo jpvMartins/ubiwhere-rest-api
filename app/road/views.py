@@ -17,6 +17,8 @@ from core.models import (
 from road import serializers
 
 
+
+
 class RoadViewSet(viewsets.ModelViewSet):
     """View for manage Road APIs.(road/views.py)"""
 
@@ -24,6 +26,7 @@ class RoadViewSet(viewsets.ModelViewSet):
     queryset = Road.objects.all()
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
+    
 
     def get_queryset(self):
         """Retrive roads ."""
@@ -51,6 +54,7 @@ class ClassificationViewSet(mixins.UpdateModelMixin,
     queryset = Classification.objects.filter(id=1)
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
+    pagination_class = None
 
 
 

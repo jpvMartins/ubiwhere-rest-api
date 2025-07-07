@@ -3,15 +3,18 @@ Serializers for Road APIs
 """
 
 from rest_framework import serializers
+from drf_spectacular.utils import extend_schema_field
+from rest_framework_gis import serializers as gis_serializers
+from rest_framework_gis.fields import GeometryField, GeometrySerializerMethodField
+
 
 from core.models import (
     Road,
     Velocity_Reads,
     Classification,
 )
-from drf_spectacular.utils import extend_schema_field
-from rest_framework_gis import serializers as gis_serializers
-from rest_framework_gis.fields import GeometryField, GeometrySerializerMethodField
+
+
 
 
 def get_intensity(speed, low, high):
