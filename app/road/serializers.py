@@ -64,5 +64,5 @@ class ReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Velocity_Reads
         fields = ['id','road','read_value','read_at']
-        read_only_fileds = ['id','read_at']  
+        read_only_fields = ['id','read_at']  
 

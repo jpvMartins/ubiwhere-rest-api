@@ -25,4 +25,14 @@ docker compose up
 ```
 
 
+---
+
+##  EndPoints
+
+-   /road/roads -> CRUD for roads
+-   /road/velocit_reads -> CRUD for velocity_reads
+-  /sensor/car/pass-by/?license_plate=AA16AA  -> Returns all plate reads from the last 24 hours for a given license plate.
+
+---
+
 

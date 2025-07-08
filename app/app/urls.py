@@ -36,5 +36,9 @@ urlpatterns = [
     path(
         'api/road/',
         include('road.urls')
+    ),
+    path(
+        'api/sensor/',
+        include('sensor.urls')
     )
 ]

@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
     'rest_framework.authtoken',
+    "rest_framework_api_key",
     'rest_framework_gis',
     'drf_spectacular',
     'user',
     'road',
+    'sensor'
 ]
 
 MIDDLEWARE = [
@@ -139,13 +141,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Setting Auth_User_Model configuration
 # This tells Django to use our custom User model instead of the default one.
 AUTH_USER_MODEL = 'core.User'
+API_KEY_CUSTOM_HEADER = "23231c7a-80a7-4810-93b3-98a18ecfbc42"
 
 # REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
-
 }
 
 GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'

@@ -5,7 +5,8 @@ from core.models import(
     Road,
     Velocity_Reads,
     User,
-    Classification
+    Classification,
+    Sensor
 )
 
 from django.core.management.base import BaseCommand
@@ -20,7 +21,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """Entry point for command."""
         if not Road.objects.exists():
-            self.stdout.write("Populating database...")
+            self.stdout.write("Populating database reads...")
 
             with open('Traffic_Speed/traffic_speed.csv', newline='') as dataFile:
                 reader = csv.DictReader(dataFile)
@@ -38,8 +39,20 @@ class Command(BaseCommand):
                         road=road,
                         read_value=Decimal(line['Speed'])
                     )
-            
-            self.stdout.write(self.style.SUCCESS("Database populated!"))
+            self.stdout.write(self.style.SUCCESS("Database reads populated!"))
+
+        if not Sensor.objects.exists():
+            self.stdout.write("Populating database sensors...")
+            with open('Traffic_Speed/sensors.csv', newline='') as dataFile:
+                
+                reader = csv.DictReader(dataFile)
+                for line in reader:
+                    Sensor.objects.get_or_create(
+                        name = line['name'],
+                        uuid = line['uuid']   
+                    )
+
+            self.stdout.write(self.style.SUCCESS("Database sensors populated!"))
         if not User.objects.filter(is_superuser=True).exists():
             self.stdout.write("Creating dev SuperUser...")
             get_user_model().objects.create_superuser(

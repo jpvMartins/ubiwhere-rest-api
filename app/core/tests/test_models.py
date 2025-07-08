@@ -87,7 +87,7 @@ class ModelTests(TestCase):
 
     def test_created_read(self):
         """
-        TesT createing a red sucssesful.
+        TesT createing a read sucssesful.
         """
         road = models.Road.objects.create(
             segment=LineString(
@@ -102,3 +102,13 @@ class ModelTests(TestCase):
             read_value = Decimal('30.05')
         )        
         self.assertEqual(str(read),f"Read {read.read_value} at {read.road}")
+
+    def test_created_sensor(self):
+        """
+        Test creating a sensor sucssesful.
+        """
+        sensor = models.Sensor.objects.create(
+            name= "Test Sensor",
+            uuid= "a3e86bd0-c19f-44e9-84c0-eadf4d4da197"
+        )
+        self.assertEqual(str(sensor),f" Sensor {sensor.name}: uuid - {sensor.uuid}")

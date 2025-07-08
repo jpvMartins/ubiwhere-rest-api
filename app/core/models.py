@@ -89,7 +89,8 @@ class Velocity_Reads(models.Model):
     def __str__(self):
         """Return a string visualization of our read."""
         return f"Read {self.read_value} at {self.road}"
-    
+
+
 class Classification(models.Model):
     """
     Classification object.
@@ -101,3 +102,41 @@ class Classification(models.Model):
 
     def __str__(self):
         return f"{self.id}: min_value: {self.min_value} , max_value: {self.max_value}"
+
+
+class Car (models.Model):
+    """ Car object."""
+
+    license_plate = models.CharField(max_length=15, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['license_plate'], name='unique_license_plate')
+        ]
+
+    def __str__(self):
+        return f"Car with license_plate {self.license_plate},created at {self.created_at}"
+
+
+class Sensor( models.Model):
+    "Sensor Object."
+
+    uuid = models.UUIDField( unique=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f" Sensor {self.name}: uuid - {self.uuid}"
+
+
+class Plates_Reads(models.Model):
+    "PLate's Read object."
+
+    road_segment = models.ForeignKey(Road, on_delete=models.CASCADE,related_name='road')
+    car_plate = models.ForeignKey(Car, on_delete=models.CASCADE ,related_name='car')
+    sensor = models.ForeignKey(Sensor, on_delete=models.PROTECT)
+    read_at = models.DateTimeField()
+
+    def __str__(self):
+        return f"Read {self.car_plate} by {self.sensor} at {self.read_at}"
+

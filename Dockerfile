@@ -21,7 +21,6 @@ RUN python -m venv /py && \
         gdal-dev \
         geos-dev \
         proj-dev &&\
-
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ "$DEV" = "true" ]; then \
         /py/bin/pip install -r /tmp/requirements.dev.txt; \
