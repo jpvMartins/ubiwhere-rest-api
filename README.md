@@ -19,7 +19,7 @@ A RESTful API for managing road segments and speed readings, with dynamic traffi
 Clone the repository and spin up the environment using Docker:
 
 ```bash
-git https://github.com/jpvMartins/ubiwhere-rest-api.git
+git clone https://github.com/jpvMartins/ubiwhere-rest-api.git
 cd ubiwhere-rest-api
 docker compose up
 ```
